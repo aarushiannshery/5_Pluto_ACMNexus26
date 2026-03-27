@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0284c7;
+  --color-primary-container: #bae6fd;
+  --color-tertiary: #14b8a6;
+  --color-tertiary-container: #ccfbf1;
+  --color-secondary: #8b5cf6;
+  --color-secondary-container: #ede9fe;
+  --color-error: #ef4444;
+  --color-error-container: #fecaca;
+  
+  --color-on-surface: #f8fafc;
+  --color-on-surface-variant: #94a3b8;
+  
+  --color-surface-container-lowest: #020617;
+  --color-surface-container-low: #0f172a;
+  --color-surface-container-highest: #1e293b;
+
+  --font-headline: 'Inter', sans-serif;
+  --font-label: 'Inter', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-family: var(--font-body);
+}
+
+.glass-panel {
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fog-shadow {
+  box-shadow: 0 0 30px rgba(2, 132, 199, 0.15), inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-tertiary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
