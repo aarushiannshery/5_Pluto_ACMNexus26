@@ -28,3 +28,22 @@
 
 ### Issues Faced
 - Initial remote image download attempt failed, resolved by using provided local files
+
+## 22:58
+
+### Features Added
+- Set up the base Express server for the RESQ.AI backend
+- Hooked up the PostgreSQL database and created the Prisma schema
+- Built the Risk API to fetch actual data from OpenWeather and calculate disaster chances
+- Created the core AI Report API to process location insights and save them to the DB
+
+### Files Modified
+- Added `package.json`, `server.js`, and `.env.example`
+- Created Prisma schema in `prisma/schema.prisma`
+- Added the DB and Axios config files in the `config/` folder
+- Built the API routes and controllers for `risk` and `report`
+- Set up a global error handling middleware
+
+### Issues Faced
+- Figured out how to split the backend structure into modular pieces so both of us could code and commit without causing merge conflicts
+- Had to write fallback weather data logic just in case the OpenWeather API rate limits us
