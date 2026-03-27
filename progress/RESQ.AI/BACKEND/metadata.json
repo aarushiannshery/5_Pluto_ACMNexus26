@@ -1,0 +1,7 @@
+{
+  "name": "Remix: RESQ.AI",
+  "description": "AI-driven disaster preparedness and risk monitoring platform for a resilient future.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
