@@ -47,3 +47,18 @@
 ### Issues Faced
 - Figured out how to split the backend structure into modular pieces so both of us could code and commit without causing merge conflicts
 - Had to write fallback weather data logic just in case the OpenWeather API rate limits us
+
+## 01:18
+
+### Features Added
+- Added the real OpenWeather API keys into our `.env` file for the backend
+- Set up a `.gitignore` so we don't accidentally leak our API keys or push massive `node_modules` folders to GitHub
+- Used GitHub's `Co-authored-by` trick in our commit messages so we both get credit while coding on the same laptop!
+
+### Files Modified
+- `server/.env`
+- `.gitignore`
+
+### Issues Faced
+- Our terminal kept throwing errors because it couldn't find the `git` command, so we had to figure out how to commit and push everything using just the VS Code buttons
+- We made a messy commit by accident, but managed to use the "Undo Last Commit" feature to fix it and force sync it to keep our GitHub history clean
