@@ -28,3 +28,18 @@
 
 ### Issues Faced
 - Initial remote image download attempt failed, resolved by using provided local files
+
+## 23:01
+
+### Features Added
+- Added backend routes, controllers, and error-handling middlewares for risk and report APIs
+
+### Files Modified
+- server/middlewares/error.middleware.js
+- routes/risk.routes.js
+- routes/report.routes.js
+- server/controllers/report.controller.js
+- server/controllers/risk.controller.js
+
+### Issues Faced
+- None

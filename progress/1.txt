@@ -1,0 +1,5 @@
+Progress from 23:00 to 23:14:
+- Added backend routes for risk and report APIs
+- Added backend controllers for risk and report APIs
+- Added error handling middlewares
+- Created CHANGELOG.md entries
