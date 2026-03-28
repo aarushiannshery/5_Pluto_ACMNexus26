@@ -1,0 +1,192 @@
+/* RESQ.AI Design System - Premium Muted Glassmorphism */
+:root {
+  /* Dark Mode Base */
+  --bg-dark: #0f1115;
+  --bg-panel: rgba(25, 28, 36, 0.4);
+  
+  /* Muted Status Colors - No Blinding Neon */
+  --status-safe: #618c64;      /* Dusty Sage Green */
+  --status-medium: #cba052;    /* Dusty Amber */
+  --status-critical: #ba4e4e;  /* Dusty Crimson */
+  --status-text: #b3b9c5;      /* Slate Gray Text */
+  
+  /* Interface Assets */
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --btn-solid: #1c2027;        /* Matte Button No Gradient */
+  --btn-solid-hover: #252a33;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Outfit', sans-serif;
+  color: #eeeeee;
+}
+
+body {
+  background-color: var(--bg-dark);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 450px; /* Mobile Dashboard Feel */
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Glassmorphism Panels */
+.glass-panel {
+  background: var(--bg-panel);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+/* Header */
+.header-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.logo .highlight {
+  color: var(--status-safe); /* Syncs with JS */
+}
+
+/* Radar & Circular Dial */
+.radar-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.radar-header h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  color: var(--status-text);
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+
+.risk-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 6px solid var(--status-safe); /* Default border state */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+  transition: border-color 0.8s ease; /* Smooth transition instead of jarring glow */
+}
+
+.risk-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.risk-value {
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.risk-label {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--status-text);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Solid Buttons (No Gradients!) */
+.solid-btn {
+  width: 100%;
+  background-color: var(--btn-solid);
+  color: #fff;
+  border: 1px solid var(--glass-border);
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: all 0.2s ease;
+}
+
+.solid-btn:hover {
+  background-color: var(--btn-solid-hover);
+}
+
+/* Insights Cards */
+.insights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.insight-card {
+  text-align: center;
+  padding: 16px;
+}
+
+.insight-icon {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.insight-card h3 {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--status-text);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+/* Dynamic JS State Classes */
+.state-safe { border-color: var(--status-safe) !important; color: var(--status-safe); }
+.state-caution { border-color: var(--status-medium) !important; color: var(--status-medium); }
+.state-red { border-color: var(--status-critical) !important; color: var(--status-critical); }
+
+/* Hidden Top Dropdown Alert Banner */
+.alert-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--status-critical);
+  color: white;
+  text-align: center;
+  padding: 16px;
+  z-index: 1000;
+  transform: translateY(-100%);
+  transition: transform 0.4s ease-in-out;
+}
+
+.alert-banner.show {
+  transform: translateY(0);
+}
+
+.hidden { display: none; }

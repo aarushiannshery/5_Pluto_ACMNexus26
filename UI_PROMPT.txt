@@ -1,0 +1,39 @@
+You are an expert Frontend UI/UX Developer building the interface for RESQ.AI, a high-tech localized disaster emergency response platform. We have a fully functioning Node.js/Express backend ready to be consumed.
+
+Please generate a single-page web application (HTML, CSS, and Vanilla JavaScript) handling the following exact requirements:
+
+### 1. DESIGN AESTHETIC & CONSTRAINTS:
+- **Theme:** Deep Dark Mode (obsidian backgrounds like `#0f1115`).
+- **Styling Method:** Premium Muted Glassmorphism for all widgets and panels (`backdrop-filter: blur(12px)`, subtle borders).
+- **Buttons:** NO gradients! Use solid, matte dark gray buttons (`#1c2027`) with slight hover states.
+- **Status Colors:** Tone down neon colors. Use "Dusty" muted colors for system conditions: Dusty Sage Green (Safe), Dusty Amber (Caution), and Dusty Crimson (Critical Alert).
+- **Typography:** Modern, structured technical fonts (Google Font: Outfit or Inter).
+
+### 2. KEY UI COMPONENTS TO BUILD:
+- **Header:** Logo (RESQ.AI) and a GPS Status/Location tracker.
+- **Risk Radar Widget:** A massive central dial showcasing a disaster `probability` (0-99%) and a text label for `disasterType`. It must change color based on the risk level.
+- **Critical Alert Banner:** A hidden red drop-down banner at the very top. It ONLY slides into view if the API returns `isAlertActive: true`.
+- **AI Insights Matrix:** A grid of 3-4 glassmorphic cards showing structural readings for Water Level, Grid Stability, and Shelter Capacity.
+- **Crowdsourcing Signal Buttons:** A row of buttons letting users report ["Road flooded", "Water level rising", "Power outage"].
+- **One-Tap Emergency Tools:** Buttons for ["Nearest Shelters", "Kit Checklist", "Emergency Contacts"]. Tapping these should populate a beautiful modal window.
+
+### 3. API INTEGRATION & JAVASCRIPT LOGIC:
+On page load, use `navigator.geolocation.getCurrentPosition()` to get the user's `lat` and `lon` float coordinates. Using those coordinates, map the logic to our local `http://localhost:5000` API:
+
+**A. RISK DATA (GET `/api/risk?lat={lat}&lon={lon}`)**
+Returns: `{ "probability": 80, "riskLevel": "CRITICAL", "disasterType": "Flash Flood", "isAlertActive": true, "alertMessage": "..." }`
+*Action: Colorize the UI and drop down the Alert Banner if `isAlertActive` fires.*
+
+**B. STRUCTURAL DATA (GET `/api/report?lat={lat}&lon={lon}`)**
+Returns: `{ "summary": "...", "waterLevel": "Rising Quick", "gridStability": "Fluctuating", "shelterCapacity": 45 }`
+*Action: Populate the AI Insights Matrix text.*
+
+**C. EMERGENCY ASSETS (GET `/api/emergency/assets?lat={lat}&lon={lon}`)**
+Returns: `{ "shelters": [...], "emergency_kit_checklist": [...], "emergency_contacts": {...} }`
+*Action: Fetch this and populate the Emergency UI Modals.*
+
+**D. CROWDSOURCING (POST `/api/signals`)**
+Body: `{ "lat": Float, "lon": Float, "type": "String" }`
+*Action: Fire a POST request when the user taps any of the Crowdsourcing Signal buttons so our DB records the danger!*
+
+Write the complete code to generate this incredible interface!

@@ -4,6 +4,8 @@ require('dotenv').config();
 
 const riskRoutes = require('./routes/risk.routes');
 const reportRoutes = require('./routes/report.routes');
+const signalRoutes = require('./routes/signal.routes');
+const emergencyRoutes = require('./routes/emergency.routes');
 const errorHandler = require('./middlewares/error.middleware');
 
 const app = express();
@@ -15,6 +17,8 @@ app.use(express.json());
 // Routes
 app.use('/api/risk', riskRoutes);
 app.use('/api/report', reportRoutes);
+app.use('/api/signals', signalRoutes);
+app.use('/api/emergency', emergencyRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

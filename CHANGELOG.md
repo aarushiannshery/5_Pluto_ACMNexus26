@@ -62,3 +62,39 @@
 ### Issues Faced
 - Our terminal kept throwing errors because it couldn't find the `git` command, so we had to figure out how to commit and push everything using just the VS Code buttons
 - We made a messy commit by accident, but managed to use the "Undo Last Commit" feature to fix it and force sync it to keep our GitHub history clean
+
+## 05:07
+
+### Features Added
+- Upgraded the `/api/risk` and `/api/report` backend algorithms from standard city-text mapping to a precise 100m GPS Coordinate system (`lat`/`lon`).
+- Designed a custom emergency trigger system (`isAlertActive`) that runs threat analysis against extreme localized weather thresholds to proactively push alerts.
+- Built a new `/api/emergency/assets` route to serve dynamic disaster assets like One-Tap nearest shelters and local survival checklists exactly where the user is standing.
+
+### Files Modified
+- `server/server.js`
+- `server/controllers/risk.controller.js`
+- `server/controllers/report.controller.js`
+- `server/routes/emergency.routes.js`
+- `server/controllers/emergency.controller.js`
+- `API_DOCS.md`
+
+### Issues Faced
+- Refactoring the entire routing system to accept and parse floating-point coordinates securely without breaking the existing OpenWeather Map integration required completely rewriting the request-body destructuring logic.
+
+## 05:43
+
+### Features Added
+- Rebuilt our API payloads to perfectly match the sleek "Cerulean Precision" UI blueprint. No more fluffy AI text, it's all strictly data now!
+- Rewrote the OpenWeather code so we can actually pull wind speeds, and we managed to write a custom math equation to calculate a "Heat Wave Index" (HWI) from scratch.
+- Dropped our boring "High/Medium/Low" risk scale and upgraded to a super clean military-style `L1-L4` scale to control the UI's glassmorphism colors.
+- Hardcoded a bunch of "Before, During, After" survival protocols straight into the API so the frontend doesn't have to render them manually.
+
+### Files Modified
+- `server/controllers/risk.controller.js`
+- `server/controllers/report.controller.js`
+- `API_DOCS.md`
+
+### Issues Faced
+- We had to completely abandon our original "AI Summary" idea because the new UI design demanded sterile, straight-to-the-point telemetry data instead. 
+- Honestly had to brush up on high-school math at 5 AM to figure out how to program a Heat Wave metric using just basic temperature and humidity floats from the weather API.
+

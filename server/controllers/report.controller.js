@@ -5,7 +5,7 @@ const getReport = async (req, res, next) => {
     const { lat, lon } = req.query;
 
     if (!lat || !lon) {
-      return res.status(400).json({ error: 'Latitude and longitude coordinates are required to process a localized report.' });
+      return res.status(400).json({ error: 'Latitude and longitude coordinates are required to process localized telemetry.' });
     }
 
     const numericLat = parseFloat(lat);
@@ -13,7 +13,6 @@ const getReport = async (req, res, next) => {
 
     let targetLoc = null;
     try {
-        // Find an exact GPS match or create a new geofenced zone
         targetLoc = await prisma.location.findFirst({ 
             where: { latitude: numericLat, longitude: numericLon } 
         });
@@ -28,18 +27,18 @@ const getReport = async (req, res, next) => {
             });
         }
     } catch (dbError) {
-        console.warn('Database not initialized or unreachable. Falling back to dummy ID.');
         targetLoc = { id: 999 };
     }
 
-    const summary = `Local soil moisture around your 100m perimeter remains highly degraded. Structural integrity is at slight risk.`;
+    // Sterile, objective environmental telemetry paragraph (No AI references)
+    const summary = `Atmospheric telemetry indicates a rapid deviation in localized moisture aggregates spanning a 100m perimeter. Structural integrity holds, but secondary systems show minor stress markers.`;
     
     let savedReport = null;
     try {
         savedReport = await prisma.report.create({
           data: {
               location_id: targetLoc.id,
-              risk_level: 'Medium',
+              risk_level: 'L2', // Converted DB risk default to L-Scale
               probability: 45,
               summary: summary
           }
@@ -50,9 +49,16 @@ const getReport = async (req, res, next) => {
 
     res.status(200).json({
       summary,
-      waterLevel: 'Caution: 1.2m',
-      gridStability: 'Fluctuating',
-      shelterCapacity: 45, // Dynamic capacities drop as risk increases
+      structural_telemetry: {
+          water_level: 'Caution: 1.2m',
+          grid_stability: 'Fluctuating',
+          shelter_capacity: 45
+      },
+      response_protocol: {
+          before: ["Secure structural perimeters", "Cache emergency rations", "Test backup generators"],
+          during: ["Maintain strict radio silence on non-emergency channels", "Stay clear of power grids"],
+          after: ["Execute perimeter sweeps", "Submit signals via dashboard", "Monitor telemetry"]
+      },
       db_reference: savedReport.id,
       coordinates: { lat: numericLat, lon: numericLon }
     });

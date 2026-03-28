@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESQ.AI | Localized Alert System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/index.css">
+</head>
+<body>
+
+    <!-- Emergency Dropdown Banner -->
+    <div id="alertBanner" class="alert-banner hidden">
+        <div class="alert-content">
+            <span class="alert-icon">⚠️</span>
+            <div class="alert-text">
+                <strong>CRITICAL ALERT:</strong> <span id="alertMessageText">No alerts right now.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application Container -->
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header class="glass-panel header-panel">
+            <div class="logo">RESQ<span class="highlight">.AI</span></div>
+            <div class="status-indicator">
+                <span class="pulse-dot" id="systemPulse"></span>
+                <span id="systemStatusText">System Ready</span>
+            </div>
+        </header>
+
+        <!-- Primary Radar Widget -->
+        <main class="main-content">
+            <div class="glass-panel radar-panel">
+                <div class="radar-header">
+                    <h2>100m Geolocation Radar</h2>
+                    <p class="subtitle" id="coordinatesDisplay">Waiting for GPS...</p>
+                </div>
+
+                <!-- Circular Risk Display -->
+                <div class="risk-circle" id="riskCircle">
+                    <div class="risk-content">
+                        <span class="risk-value" id="riskProbability">--%</span>
+                        <span class="risk-label">Probability</span>
+                    </div>
+                </div>
+
+                <div class="risk-details">
+                    <p>Current Threat Level: <strong id="threatLevel">Scanning</strong></p>
+                    <p>Predicted Event: <span id="predictedEvent">--</span></p>
+                </div>
+
+                <button id="scanBtn" class="solid-btn">Initiate Area Scan</button>
+            </div>
+
+            <!-- AI Insights Cards -->
+            <div class="insights-grid">
+                
+                <div class="glass-panel insight-card">
+                    <div class="insight-icon">🚰</div>
+                    <h3>Water Level</h3>
+                    <p id="waterLevelMetric">--</p>
+                </div>
+
+                <div class="glass-panel insight-card">
+                    <div class="insight-icon">⚡</div>
+                    <h3>Grid Stability</h3>
+                    <p id="gridStabilityMetric">--</p>
+                </div>
+
+                <div class="glass-panel insight-card">
+                    <div class="insight-icon">⛺</div>
+                    <h3>Shelter Capacity</h3>
+                    <p class="metric-number"><span id="shelterCapacityMetric">--</span><span class="small-text">beds</span></p>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts/app.js"></script>
+</body>
+</html>

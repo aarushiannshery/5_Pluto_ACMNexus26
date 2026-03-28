@@ -13,6 +13,16 @@ model Location {
   latitude  Float
   longitude Float
   reports   Report[]
+  signals   Signal[]
+}
+
+model Signal {
+  id          Int      @id @default(autoincrement())
+  location_id Int
+  type        String   // e.g. "Water rising", "Road flooded"
+  timestamp   DateTime @default(now())
+
+  location    Location @relation(fields: [location_id], references: [id])
 }
 
 model Report {
