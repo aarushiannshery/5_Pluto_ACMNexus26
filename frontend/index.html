@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Environmental Intelligence Dashboard | RESQ.AI</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#b1cbcd",
+                        "secondary-container": "#3e4960",
+                        "on-tertiary": "#1c3435",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "surface-bright": "#2d3a4a",
+                        "outline-variant": "#3f484e",
+                        "inverse-primary": "#00658d",
+                        "tertiary-fixed": "#cde8e9",
+                        "tertiary-container": "#5e7778",
+                        "surface": "#061423",
+                        "on-tertiary-fixed": "#051f20",
+                        "on-tertiary-container": "#e4feff",
+                        "on-tertiary-fixed-variant": "#334b4c",
+                        "background": "#061423",
+                        "on-error": "#690005",
+                        "secondary": "#bbc6e2",
+                        "on-secondary-fixed-variant": "#3c475d",
+                        "inverse-on-surface": "#243141",
+                        "outline": "#899299",
+                        "on-surface": "#d6e4f9",
+                        "on-secondary": "#263046",
+                        "surface-tint": "#81cfff",
+                        "primary": "#81cfff",
+                        "inverse-surface": "#d6e4f9",
+                        "on-primary-fixed-variant": "#004c6b",
+                        "secondary-fixed-dim": "#bbc6e2",
+                        "on-primary-fixed": "#001e2d",
+                        "surface-container-lowest": "#020f1e",
+                        "tertiary": "#b1cbcd",
+                        "surface-container-low": "#0f1c2c",
+                        "surface-container-high": "#1e2b3b",
+                        "on-secondary-fixed": "#101b30",
+                        "secondary-fixed": "#d7e2ff",
+                        "primary-fixed-dim": "#81cfff",
+                        "surface-variant": "#283646",
+                        "surface-container": "#132030",
+                        "on-primary": "#00344b",
+                        "primary-container": "#007baa",
+                        "on-primary-container": "#f5faff",
+                        "primary-fixed": "#c6e7ff",
+                        "on-secondary-container": "#adb8d3",
+                        "on-surface-variant": "#bfc8cf",
+                        "surface-container-highest": "#283646",
+                        "surface-dim": "#061423",
+                        "on-background": "#d6e4f9"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Space Grotesk"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+    <style>
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                opacity: 1;
+                filter: drop-shadow(0 0 10px rgba(129, 207, 255, 0.4));
+            }
+
+            50% {
+                opacity: 0.8;
+                filter: drop-shadow(0 0 20px rgba(129, 207, 255, 0.7));
+            }
+        }
+
+        @keyframes scanline {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        body {
+            background-color: #061423;
+            color: #d6e4f9;
+            font-family: 'Space Grotesk', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(40, 54, 70, 0.3) 0%, rgba(40, 54, 70, 0.1) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .glass-card:hover {
+            background: linear-gradient(135deg, rgba(40, 54, 70, 0.4) 0%, rgba(40, 54, 70, 0.2) 100%);
+            border-color: rgba(129, 207, 255, 0.2);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 12px 48px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, #81cfff, #007baa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-active {
+            position: relative;
+        }
+
+        .nav-active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: #81cfff;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #81cfff;
+        }
+
+        /* Subtle scanline effect for sensors */
+        .sensor-active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(129, 207, 255, 0.4);
+            animation: scanline 2s linear infinite;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #061423;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e2b3b;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #81cfff;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen pb-32">
+    <!-- Header -->
+    <header
+        class="fixed top-0 w-full z-[100] px-6 py-5 bg-[#061423]/60 backdrop-blur-3xl border-b border-white/5 flex justify-between items-center">
+        <div class="flex items-center gap-3 cursor-pointer group active:scale-95 transition-all"
+            onclick="window.sim.openSearch()">
+            <div class="relative">
+                <span
+                    class="material-symbols-outlined text-[#81cfff] text-2xl group-hover:scale-110 transition-transform"
+                    style="animation: glow 3s infinite ease-in-out;">location_on</span>
+                <div class="absolute inset-0 bg-primary/20 blur-xl rounded-full"></div>
+            </div>
+            <div>
+                <span
+                    class="block font-headline text-xs font-bold tracking-[0.2em] text-[#81cfff] leading-none mb-1">CENTRAL
+                    SECTOR</span>
+                <span class="block text-[10px] text-on-surface-variant font-medium tracking-wide">TAP TO SEARCH</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="h-10 w-10 flex items-center justify-center glass-card rounded-full">
+                <span class="material-symbols-outlined text-primary text-xl" data-icon="sensors">sensors</span>
+            </div>
+            <div class="h-10 w-10 flex items-center justify-center glass-card rounded-full overflow-hidden">
+                <div class="w-full h-full bg-surface-container-high animate-pulse"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="px-6 pt-32 space-y-10 max-w-lg mx-auto">
+        <!-- AI Alert Banner -->
+        <section
+            class="glass-card rounded-2xl p-4 bg-error-container/20 border-error/20 flex items-center gap-4 overflow-hidden relative">
+            <div class="absolute left-0 top-0 w-1 h-full bg-error"></div>
+            <span class="material-symbols-outlined text-error text-2xl"
+                style="animation: float 2s infinite ease-in-out;">warning</span>
+            <div class="flex-1">
+                <h3 class="text-error font-headline text-[10px] font-bold tracking-widest uppercase mb-0.5">HIGH
+                    PRIORITY ALERT</h3>
+                <p class="text-xs text-on-error-container font-medium opacity-90">Thermal peak approaching Sector 7G.
+                    Prepare for potential containment protocols.</p>
+            </div>
+        </section>
+
+        <!-- Response Actions -->
+        <section class="space-y-4">
+            <div class="flex justify-between items-center px-1">
+                <h2 class="font-headline text-[10px] uppercase tracking-[0.3em] text-on-surface-variant/70 font-bold">
+                    TACTICAL RESPONSE</h2>
+                <div class="flex items-center gap-1.5">
+                    <div class="w-1.5 h-1.5 rounded-full bg-[#81cfff] animate-pulse"></div>
+                    <span class="text-[9px] text-[#81cfff] font-bold tracking-widest">LIVE</span>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="window.sim.openProtocol()"
+                    class="flex flex-col items-center justify-center gap-4 p-8 glass-card rounded-3xl active:scale-95 group">
+                    <div
+                        class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-primary text-4xl"
+                            data-icon="emergency_home">emergency_home</span>
+                    </div>
+                    <span
+                        class="font-headline text-[10px] font-black tracking-[0.2em] text-on-surface uppercase opacity-80 group-hover:opacity-100">SHELTER</span>
+                </button>
+                <button
+                    class="flex flex-col items-center justify-center gap-4 p-8 glass-card rounded-3xl active:scale-95 group bg-primary/10 border-primary/20">
+                    <div
+                        class="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-primary text-4xl" data-icon="hub">hub</span>
+                    </div>
+                    <span
+                        class="font-headline text-[10px] font-black tracking-[0.2em] text-primary uppercase">SIGNAL</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Protocols -->
+        <section class="space-y-4">
+            <h2 class="font-headline text-[10px] uppercase tracking-[0.3em] text-on-surface-variant/70 px-1 font-bold">
+                PROTOCOL SEQUENCING</h2>
+            <div class="space-y-3">
+                <div class="glass-card rounded-2xl p-5 flex items-center gap-6 group hover:bg-[#81cfff]/5">
+                    <div class="relative">
+                        <span
+                            class="text-[10px] font-black text-primary/40 tracking-widest absolute -top-4 left-0">01</span>
+                        <div
+                            class="w-10 h-10 rounded-xl bg-surface-container-high border border-white/5 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-on-surface-variant text-xl">shield</span>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-[11px] font-black text-on-surface-variant uppercase tracking-widest mb-1">Phase
+                            1</div>
+                        <div class="text-sm font-bold text-on-surface">Secure structural integrity</div>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward_ios</span>
+                </div>
+                <div class="glass-card rounded-2xl p-5 flex items-center gap-6 group hover:bg-[#81cfff]/5">
+                    <div class="relative">
+                        <span
+                            class="text-[10px] font-black text-primary/40 tracking-widest absolute -top-4 left-0">02</span>
+                        <div
+                            class="w-10 h-10 rounded-xl bg-surface-container-high border border-white/5 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-on-surface-variant text-xl">air</span>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-[11px] font-black text-on-surface-variant uppercase tracking-widest mb-1">Phase
+                            2</div>
+                        <div class="text-sm font-bold text-on-surface">Activate filtration systems</div>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward_ios</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metrics -->
+        <section class="space-y-4">
+            <h2 class="font-headline text-[10px] uppercase tracking-[0.3em] text-on-surface-variant/70 px-1 font-bold">
+                ATMOSPHERIC TELEMETRY</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="glass-card rounded-3xl p-6 aspect-square flex flex-col justify-between group overflow-hidden relative cursor-pointer active:scale-95 transition-all"
+                    onclick="window.sim.openMetric('HWI-INDEX', 'Localized thermal pressure is building in the lower quadrant. Predicted peak in 14 minutes. Ensure filtration matrix redundancy is active.')">
+                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 blur-3xl rounded-full"></div>
+                    <div class="flex justify-between items-start z-10">
+                        <span
+                            class="text-[9px] font-black uppercase tracking-[0.2em] text-on-surface-variant">HWI-INDEX</span>
+                        <div
+                            class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center group-hover:rotate-12 transition-transform">
+                            <span class="material-symbols-outlined text-primary text-xl">thermostat</span>
+                        </div>
+                    </div>
+                    <div class="z-10">
+                        <div class="text-5xl font-black tracking-tighter text-on-surface leading-none mb-2"
+                            data-metric="hwi">104.2</div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                            <span class="text-[10px] text-error font-bold uppercase tracking-widest"
+                                data-status="hwi">CRITICAL</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card rounded-3xl p-6 aspect-square flex flex-col justify-between group overflow-hidden relative id='metric-humidity' cursor-pointer active:scale-95 transition-all"
+                    onclick="window.sim.openMetric('HUMIDITY', 'Dry air ingress detected in Sector Grid 4. Activating molecular hydration matrix to stabilize baseline levels.')">
+                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 blur-3xl rounded-full"></div>
+                    <div class="flex justify-between items-start z-10">
+                        <span
+                            class="text-[9px] font-black uppercase tracking-[0.2em] text-on-surface-variant">HUMIDITY</span>
+                        <div
+                            class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-primary text-xl">water_drop</span>
+                        </div>
+                    </div>
+                    <div class="z-10">
+                        <div class="text-5xl font-black tracking-tighter text-on-surface leading-none mb-2"><span
+                                data-metric="humidity">12</span><span class="text-xl">%</span></div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#81cfff]"></span>
+                            <span class="text-[10px] text-primary font-bold uppercase tracking-widest">DRY AREA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signals -->
+        <section class="space-y-4 pb-20">
+            <h2 class="font-headline text-[10px] uppercase tracking-[0.3em] text-on-surface-variant/70 px-1 font-bold">
+                SIGNAL INTERCEPTIONS</h2>
+            <div class="space-y-1" data-section="signals-list">
+                <div
+                    class="flex items-center gap-6 p-5 glass-card rounded-2xl mb-2 hover:bg-surface-container-high transition-colors group">
+                    <div class="relative">
+                        <div class="w-3 h-3 rounded-full bg-primary animate-ping absolute inset-0"></div>
+                        <div class="w-3 h-3 rounded-full bg-primary relative"></div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-xs font-bold text-on-surface group-hover:text-primary transition-colors">
+                            Thermal Spike Detected</div>
+                        <div class="text-[9px] text-on-surface-variant font-black uppercase mt-1 tracking-widest">02
+                            MINS AGO · SECTOR 7G</div>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">sensors</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Navigation -->
+    <nav class="fixed bottom-0 w-full z-[100] px-6 pb-10">
+        <div
+            class="max-w-md mx-auto glass-card rounded-[2.5rem] p-3 flex justify-between items-center bg-[#061423]/80 border-white/10 shadow-2xl">
+            <a class="flex flex-col items-center justify-center w-14 h-14 bg-primary text-background rounded-2xl shadow-xl shadow-primary/30 nav-active"
+                href="#" id="nav-dash">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+            </a>
+            <a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant/60 hover:text-primary transition-all group"
+                href="#" id="nav-reports">
+                <span class="material-symbols-outlined">analytics</span>
+            </a>
+            <a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant/60 hover:text-primary transition-all group"
+                href="#" id="nav-signals">
+                <span class="material-symbols-outlined">radio</span>
+            </a>
+            <a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant/60 hover:text-primary transition-all group"
+                href="#" id="nav-alerts">
+                <span class="material-symbols-outlined">shield</span>
+            </a>
+        </div>
+    </nav>
+    <!-- Wizard Overlay (Hidden by default) -->
+    <div id="wizard-overlay"
+        class="fixed inset-0 z-[200] flex items-end justify-center pointer-events-none opacity-0 transition-opacity duration-500">
+        <div class="absolute inset-0 bg-[#061423]/40 backdrop-blur-md pointer-events-auto"
+            onclick="window.sim.closeProtocol()"></div>
+
+        <div class="relative w-full max-w-lg glass-card rounded-t-[3rem] p-8 pb-12 translate-y-full transition-transform duration-500 pointer-events-auto border-t border-white/10"
+            id="wizard-sheet">
+            <!-- Progress Header -->
+            <div class="flex justify-between items-center mb-8">
+                <div class="flex gap-1.5" id="step-indicators">
+                    <div class="h-1 w-8 rounded-full bg-primary transition-all duration-300"></div>
+                    <div class="h-1 w-8 rounded-full bg-white/10 transition-all duration-300"></div>
+                    <div class="h-1 w-8 rounded-full bg-white/10 transition-all duration-300"></div>
+                </div>
+                <button onclick="window.sim.closeProtocol()"
+                    class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-on-surface-variant/40 hover:text-primary">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+
+            <!-- Wizard Views -->
+            <div id="wizard-content" class="min-h-[320px]">
+                <!-- Step 1 Template -->
+                <div id="step-1" class="space-y-6 animate-in slide-in-from-right duration-500">
+                    <div>
+                        <h2 class="text-[10px] font-black tracking-[0.3em] text-primary uppercase mb-2">PROTOCOL
+                            INITIALIZATION</h2>
+                        <h1 class="text-3xl font-black text-on-surface tracking-tighter leading-tight">Secure Critical
+                            Perimeter</h1>
+                    </div>
+                    <p class="text-sm text-on-surface-variant font-medium opacity-80 leading-relaxed">Ensure all
+                        structural structural hatches are locked. Manual confirmation required for bypass.</p>
+
+                    <button id="confirm-secure"
+                        class="w-full py-5 bg-primary/10 border border-primary/20 rounded-3xl flex items-center justify-center gap-3 group active:scale-95 transition-all">
+                        <span class="w-6 h-6 rounded-full border border-primary/40 flex items-center justify-center">
+                            <span
+                                class="material-symbols-outlined text-primary text-sm opacity-0 group-[.confirmed]:opacity-100">check</span>
+                        </span>
+                        <span class="text-xs font-black tracking-widest text-primary uppercase ml-2">All Hatches
+                            Locked</span>
+                    </button>
+
+                    <button onclick="window.sim.nextProtocolStep()"
+                        class="w-full py-6 bg-primary text-background rounded-3xl font-black text-xs tracking-[0.2em] uppercase shadow-xl shadow-primary/20 disabled:opacity-30"
+                        disabled id="next-protocol">
+                        Proceed to Activation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search Overlay -->
+    <div id="search-overlay"
+        class="fixed inset-0 z-[300] flex flex-col pointer-events-none opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-[#061423]/95 backdrop-blur-3xl pointer-events-auto"></div>
+        <div class="relative flex flex-col h-full pointer-events-auto">
+            <header class="p-6 border-b border-white/5 flex items-center gap-4">
+                <button onclick="window.sim.closeSearch()"
+                    class="w-10 h-10 flex items-center justify-center glass-card rounded-full">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <div class="flex-1 bg-white/5 rounded-2xl p-4 flex items-center gap-3">
+                    <span class="material-symbols-outlined text-primary/40">search</span>
+                    <input type="text" placeholder="Search sectors..."
+                        class="bg-transparent border-none outline-none text-sm w-full font-headline tracking-wide focus:ring-0">
+                </div>
+            </header>
+            <div class="flex-1 overflow-y-auto p-6 space-y-4">
+                <h3 class="text-[10px] font-black tracking-[0.3em] text-on-surface-variant/40 uppercase">ACTIVE SECTORS
+                </h3>
+                <div class="space-y-1" id="location-list">
+                    <button onclick="window.sim.selectSector('CENTRAL SECTOR')"
+                        class="w-full p-5 glass-card rounded-3xl flex items-center justify-between group active:scale-[0.98] transition-all">
+                        <div class="flex items-center gap-4">
+                            <span class="material-symbols-outlined text-primary">location_on</span>
+                            <span class="text-sm font-bold text-on-surface">Central Sector</span>
+                        </div>
+                        <span class="text-[9px] font-black text-primary uppercase tracking-widest">CURRENT</span>
+                    </button>
+                    <button onclick="window.sim.selectSector('SECTOR 7G')"
+                        class="w-full p-5 hover:bg-white/5 rounded-3xl flex items-center justify-between group transition-all">
+                        <div class="flex items-center gap-4">
+                            <span class="material-symbols-outlined text-on-surface-variant/40">location_on</span>
+                            <span class="text-sm font-bold text-on-surface">Sector 7G</span>
+                        </div>
+                    </button>
+                    <button onclick="window.sim.selectSector('COASTAL LINE')"
+                        class="w-full p-5 hover:bg-white/5 rounded-3xl flex items-center justify-between group transition-all">
+                        <div class="flex items-center gap-4">
+                            <span class="material-symbols-outlined text-on-surface-variant/40">waves</span>
+                            <span class="text-sm font-bold text-on-surface">Coastal Line</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metric Detail View -->
+    <div id="metric-overlay"
+        class="fixed inset-0 z-[400] flex items-end pointer-events-none opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-[#061423]/60 backdrop-blur-md pointer-events-auto"
+            onclick="window.sim.closeMetric()"></div>
+        <div class="relative w-full glass-card rounded-t-[3rem] p-8 pb-12 translate-y-full transition-transform duration-500 border-t border-white/10 pointer-events-auto shadow-2xl"
+            id="metric-sheet">
+            <header class="flex justify-between items-start mb-8">
+                <div>
+                    <h2 id="metric-title-sub"
+                        class="text-[10px] font-black tracking-[0.3em] text-primary uppercase mb-1">TELEMETRY ANALYSIS
+                    </h2>
+                    <h1 id="metric-title-main" class="text-4xl font-black text-on-surface tracking-tighter">HWI-INDEX
+                    </h1>
+                </div>
+                <button onclick="window.sim.closeMetric()"
+                    class="w-10 h-10 rounded-full glass-card flex items-center justify-center">
+                    <span class="material-symbols-outlined text-on-surface-variant/40">close</span>
+                </button>
+            </header>
+
+            <div class="space-y-8">
+                <!-- Visual Chart Simulation -->
+                <div class="h-40 flex items-end gap-2 px-1">
+                    <div class="flex-1 bg-primary/20 rounded-t-lg h-[60%] animate-pulse"></div>
+                    <div class="flex-1 bg-primary/20 rounded-t-lg h-[45%]"></div>
+                    <div class="flex-1 bg-primary/20 rounded-t-lg h-[80%] animate-pulse"></div>
+                    <div class="flex-1 bg-primary/40 rounded-t-lg h-[90%]"></div>
+                    <div class="flex-1 bg-primary/20 rounded-t-lg h-[70%]"></div>
+                    <div class="flex-1 bg-primary/60 rounded-t-lg h-[100%] shadow-lg shadow-primary/20"></div>
+                </div>
+
+                <div class="p-6 rounded-3xl bg-surface-container-high/40 border border-white/5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="material-symbols-outlined text-primary text-xl">psychology</span>
+                        <h3 class="text-xs font-black tracking-widest uppercase text-on-surface">AI ANALYSIS</h3>
+                    </div>
+                    <p id="metric-ai-text"
+                        class="text-sm text-on-surface-variant font-medium leading-relaxed opacity-80">Localized thermal
+                        pressure is building in the lower quadrant. Predicted peak in 14 minutes. Ensure filtration
+                        matrix redundancy is active.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

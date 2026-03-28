@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#b1cbcd",
+                        "secondary-container": "#3e4960",
+                        "on-tertiary": "#1c3435",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "surface-bright": "#2d3a4a",
+                        "outline-variant": "#3f484e",
+                        "inverse-primary": "#00658d",
+                        "tertiary-fixed": "#cde8e9",
+                        "tertiary-container": "#5e7778",
+                        "surface": "#061423",
+                        "on-tertiary-fixed": "#051f20",
+                        "on-tertiary-container": "#e4feff",
+                        "on-tertiary-fixed-variant": "#334b4c",
+                        "background": "#061423",
+                        "on-error": "#690005",
+                        "secondary": "#bbc6e2",
+                        "on-secondary-fixed-variant": "#3c475d",
+                        "inverse-on-surface": "#243141",
+                        "outline": "#899299",
+                        "on-surface": "#d6e4f9",
+                        "on-secondary": "#263046",
+                        "surface-tint": "#81cfff",
+                        "primary": "#81cfff",
+                        "inverse-surface": "#d6e4f9",
+                        "on-primary-fixed-variant": "#004c6b",
+                        "secondary-fixed-dim": "#bbc6e2",
+                        "on-primary-fixed": "#001e2d",
+                        "surface-container-lowest": "#020f1e",
+                        "tertiary": "#b1cbcd",
+                        "surface-container-low": "#0f1c2c",
+                        "surface-container-high": "#1e2b3b",
+                        "on-secondary-fixed": "#101b30",
+                        "secondary-fixed": "#d7e2ff",
+                        "primary-fixed-dim": "#81cfff",
+                        "surface-variant": "#283646",
+                        "surface-container": "#132030",
+                        "on-primary": "#00344b",
+                        "primary-container": "#007baa",
+                        "on-primary-container": "#f5faff",
+                        "primary-fixed": "#c6e7ff",
+                        "on-secondary-container": "#adb8d3",
+                        "on-surface-variant": "#bfc8cf",
+                        "surface-container-highest": "#283646",
+                        "surface-dim": "#061423",
+                        "on-background": "#d6e4f9"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Space Grotesk"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #061423;
+            color: #d6e4f9;
+            font-family: 'Space Grotesk', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .glass-card {
+            background: rgba(40, 54, 70, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen pb-28">
+    <!-- TopAppBar -->
+    <header
+        class="fixed top-0 w-full z-50 bg-[#061423]/80 backdrop-blur-xl flex justify-between items-center px-6 py-4 w-full">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[#81cfff]" data-icon="location_on">location_on</span>
+            <span class="font-['Space_Grotesk'] text-sm tracking-tight text-[#bfc8cf]">Central Sector</span>
+        </div>
+        <div class="text-lg font-bold text-[#81cfff] tracking-tighter">
+            <!-- Brand Logo Space - Implicitly handles the Environmental Intelligence brand -->
+            <span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+        </div>
+    </header>
+    <main class="px-5 pt-24 space-y-8">
+        <!-- Emergency Actions Section -->
+        <section class="space-y-4">
+            <h2 class="font-headline text-xs uppercase tracking-[0.2em] text-on-surface-variant px-1">Critical Response
+            </h2>
+            <div class="grid grid-cols-2 gap-3">
+                <button
+                    class="flex flex-col items-center justify-center gap-3 p-6 glass-card rounded-xl border border-white/5 active:scale-95 transition-transform">
+                    <span class="material-symbols-outlined text-primary text-3xl"
+                        data-icon="emergency_home">emergency_home</span>
+                    <span class="font-headline text-[10px] font-bold tracking-widest text-primary uppercase">EMERGENCY
+                        SHELTER</span>
+                </button>
+                <button
+                    class="flex flex-col items-center justify-center gap-3 p-6 glass-card rounded-xl border border-white/5 active:scale-95 transition-transform bg-primary/10">
+                    <span class="material-symbols-outlined text-error text-3xl" data-icon="notification_important"
+                        style="font-variation-settings: 'FILL' 1;">notification_important</span>
+                    <span class="font-headline text-[10px] font-bold tracking-widest text-error uppercase">ALERT</span>
+                </button>
+            </div>
+        </section>
+        <!-- Tactical Response Protocol -->
+        <section class="space-y-4">
+            <h2 class="font-headline text-xs uppercase tracking-[0.2em] text-on-surface-variant px-1">Response Protocol
+            </h2>
+            <div class="flex flex-col gap-2">
+                <div class="glass-card rounded-xl p-4 flex items-center justify-between border border-white/5">
+                    <div class="flex items-center gap-4">
+                        <span class="text-primary-fixed text-xs font-bold w-12">BEFORE</span>
+                        <div class="h-8 w-[1px] bg-outline-variant/30"></div>
+                        <span class="text-sm font-medium text-on-surface">Secure structural integrity</span>
+                    </div>
+                    <span class="material-symbols-outlined text-on-surface-variant text-sm"
+                        data-icon="chevron_right">chevron_right</span>
+                </div>
+                <div class="glass-card rounded-xl p-4 flex items-center justify-between border border-white/5">
+                    <div class="flex items-center gap-4">
+                        <span class="text-primary-fixed text-xs font-bold w-12">DURING</span>
+                        <div class="h-8 w-[1px] bg-outline-variant/30"></div>
+                        <span class="text-sm font-medium text-on-surface">Activate filtration systems</span>
+                    </div>
+                    <span class="material-symbols-outlined text-on-surface-variant text-sm"
+                        data-icon="chevron_right">chevron_right</span>
+                </div>
+                <div class="glass-card rounded-xl p-4 flex items-center justify-between border border-white/5">
+                    <div class="flex items-center gap-4">
+                        <span class="text-primary-fixed text-xs font-bold w-12">AFTER</span>
+                        <div class="h-8 w-[1px] bg-outline-variant/30"></div>
+                        <span class="text-sm font-medium text-on-surface">Monitor subsidence levels</span>
+                    </div>
+                    <span class="material-symbols-outlined text-on-surface-variant text-sm"
+                        data-icon="chevron_right">chevron_right</span>
+                </div>
+            </div>
+        </section>
+        <!-- Core Metrics Section -->
+        <section class="space-y-4">
+            <h2 class="font-headline text-xs uppercase tracking-[0.2em] text-on-surface-variant px-1">Atmospheric
+                Telemetry</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Heat Wave Index -->
+                <div
+                    class="glass-card rounded-xl p-5 border border-white/5 flex flex-col justify-between aspect-square">
+                    <div class="flex justify-between items-start">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">HWI
+                            Index</span>
+                        <span class="material-symbols-outlined text-primary text-lg"
+                            data-icon="thermostat">thermostat</span>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold tracking-tighter text-on-surface">104.2</div>
+                        <div class="text-[10px] text-primary uppercase tracking-widest mt-1">Extreme Heat</div>
+                    </div>
+                </div>
+                <!-- Humidity -->
+                <div
+                    class="glass-card rounded-xl p-5 border border-white/5 flex flex-col justify-between aspect-square">
+                    <div class="flex justify-between items-start">
+                        <span
+                            class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Humidity</span>
+                        <span class="material-symbols-outlined text-primary text-lg"
+                            data-icon="humidity_mid">humidity_mid</span>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold tracking-tighter text-on-surface">12</div>
+                        <div class="text-[10px] text-primary uppercase tracking-widest mt-1">Percent (%)</div>
+                    </div>
+                </div>
+                <!-- Impact Level -->
+                <div
+                    class="glass-card rounded-xl p-5 border border-white/5 flex flex-col justify-between aspect-square">
+                    <div class="flex justify-between items-start">
+                        <span
+                            class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Impact</span>
+                        <span class="material-symbols-outlined text-primary text-lg" data-icon="cyclone">cyclone</span>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold tracking-tighter text-on-surface">L4</div>
+                        <div class="text-[10px] text-primary uppercase tracking-widest mt-1">Severity Level</div>
+                    </div>
+                </div>
+                <!-- Wind Speed -->
+                <div
+                    class="glass-card rounded-xl p-5 border border-white/5 flex flex-col justify-between aspect-square">
+                    <div class="flex justify-between items-start">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Wind
+                            Speed</span>
+                        <span class="material-symbols-outlined text-primary text-lg" data-icon="air">air</span>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold tracking-tighter text-on-surface">48.5</div>
+                        <div class="text-[10px] text-primary uppercase tracking-widest mt-1">Miles/Hour</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Live Signals -->
+        <section class="space-y-4">
+            <h2 class="font-headline text-xs uppercase tracking-[0.2em] text-on-surface-variant px-1">Live Signals</h2>
+            <div class="space-y-1">
+                <div class="flex items-center gap-4 p-4 hover:bg-surface-container-high/50 transition-colors">
+                    <div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+                    <div class="flex-1">
+                        <div class="text-sm font-medium text-on-surface">Thermal Spike Detected</div>
+                        <div class="text-[10px] text-on-surface-variant/70 uppercase">02 mins ago · Sector 7G</div>
+                    </div>
+                    <span class="material-symbols-outlined text-on-surface-variant text-lg"
+                        data-icon="sensors">sensors</span>
+                </div>
+                <div class="flex items-center gap-4 p-4 hover:bg-surface-container-high/50 transition-colors">
+                    <div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+                    <div class="flex-1">
+                        <div class="text-sm font-medium text-on-surface">Pressure Gradient Normalizing</div>
+                        <div class="text-[10px] text-on-surface-variant/70 uppercase">14 mins ago · Coastal Line</div>
+                    </div>
+                    <span class="material-symbols-outlined text-on-surface-variant text-lg"
+                        data-icon="waves">waves</span>
+                </div>
+                <div class="flex items-center gap-4 p-4 hover:bg-surface-container-high/50 transition-colors">
+                    <div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+                    <div class="flex-1">
+                        <div class="text-sm font-medium text-on-surface">Particulate Baseline Shift</div>
+                        <div class="text-[10px] text-on-surface-variant/70 uppercase">28 mins ago · Urban Core</div>
+                    </div>
+                    <span class="material-symbols-outlined text-on-surface-variant text-lg"
+                        data-icon="blur_on">blur_on</span>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- BottomNavBar -->
+    <nav
+        class="fixed bottom-0 w-full z-50 rounded-t-xl bg-[#061423]/90 backdrop-blur-2xl flex justify-around items-center w-full px-4 pb-6 pt-3">
+        <!-- Dashboard (Active) -->
+        <a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#81cfff] to-[#007baa] text-[#061423] rounded-xl px-3 py-1"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="dashboard"
+                style="font-variation-settings: 'FILL' 1;">dashboard</span>
+            <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Dashboard</span>
+        </a>
+        <!-- Reports -->
+        <a class="flex flex-col items-center justify-center text-[#bfc8cf] px-3 py-1 hover:text-[#81cfff] transition-all"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+            <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Reports</span>
+        </a>
+        <!-- Signals -->
+        <a class="flex flex-col items-center justify-center text-[#bfc8cf] px-3 py-1 hover:text-[#81cfff] transition-all"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="Settings_Input_Antenna">settings_input_antenna</span>
+            <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Signals</span>
+        </a>
+        <!-- Alerts -->
+        <a class="flex flex-col items-center justify-center text-[#bfc8cf] px-3 py-1 hover:text-[#81cfff] transition-all"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="warning">warning</span>
+            <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Alerts</span>
+        </a>
+    </nav>
+</body>
+
+</html>
