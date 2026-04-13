@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Location {
+  id        Int      @id @default(autoincrement())
+  name      String
+  latitude  Float
+  longitude Float
+  reports   Report[]
+  signals   Signal[]
+}
+
+model Signal {
+  id          Int      @id @default(autoincrement())
+  location_id Int
+  type        String   // e.g. "Water rising", "Road flooded"
+  timestamp   DateTime @default(now())
+
+  location    Location @relation(fields: [location_id], references: [id])
+}
+
+model Report {
+  id          Int      @id @default(autoincrement())
+  location_id Int
+  risk_level  String
+  probability Float
+  summary     String
+  timestamp   DateTime @default(now())
+
+  location    Location @relation(fields: [location_id], references: [id])
+}
